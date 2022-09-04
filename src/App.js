@@ -61,7 +61,14 @@ function App() {
     }
   };
 
-  return <Canvas draw={draw} onClick={handleCanvasClick} />;
+  return (
+    <div>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
+      <Canvas draw={draw} onClick={handleCanvasClick} />
+    </div>
+  );
 }
 
 export default App;
