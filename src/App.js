@@ -11,7 +11,6 @@ linkImage.src = link;
 
 const useCanvas = (draw) => {
   const canvasRef = useRef(null);
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -19,8 +18,19 @@ const useCanvas = (draw) => {
     canvas.width = window.innerWidth - 100;
     canvas.height = window.innerHeight - 100;
 
-    draw(ctx);
-  });
+    let frameCount = 0;
+    let animationFrameId;
+
+    const render = () => {
+      frameCount++;
+      draw(ctx, frameCount);
+      animationFrameId = window.requestAnimationFrame(render);
+    };
+    render();
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [draw]);
 
   return canvasRef;
 };
@@ -32,19 +42,26 @@ const Canvas = (props) => {
 };
 
 function App() {
-  const draw = (ctx) => {
+  const draw = (ctx, frameCount) => {
     ctx.drawImage(roomImage, 0, 0);
-    ctx.drawImage(linkImage, 100, 100);
+
+    let linkX = 240;
+    let linkY = 330 - frameCount;
+    if (linkY < 64) {
+      linkY = 64;
+    }
+
+    ctx.drawImage(linkImage, linkX, linkY);
   };
 
-  const handleCanvasClick= e =>{
-    const {x, y} = { x: e.clientX, y: e.clientY };
+  const handleCanvasClick = (e) => {
+    const { x, y } = { x: e.clientX, y: e.clientY };
     if (x >= 100 && x < 116 && y >= 100 && y < 116) {
       console.log("Link Click");
     }
   };
 
-  return <Canvas draw={draw} onClick={handleCanvasClick}/>;
+  return <Canvas draw={draw} onClick={handleCanvasClick} />;
 }
 
 export default App;
