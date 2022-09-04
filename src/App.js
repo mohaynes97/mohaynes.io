@@ -62,9 +62,9 @@ function App() {
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
+    <div className="bg-black">
+      <h1 className="text-white font-nintendo-nes">
+        IT'S DANGEROUS TO GO ALONE! TAKE THIS.
       </h1>
       <Canvas draw={draw} onClick={handleCanvasClick} />
     </div>
