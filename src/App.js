@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useRef, useEffect } from "react";
 import room from "./room.png";
 import link from "./link.png";
+import { list } from "postcss";
 
 let roomImage = new Image();
 roomImage.src = room;
@@ -50,6 +51,18 @@ function App() {
     if (linkY < 64) {
       linkY = 64;
     }
+
+    let lineOneText = "IT'S DANGEROUS TO GO".split("");
+    let lineTwoText = "ALONE! TAKE THIS.".split("");
+
+    ctx.font = "16px NintendoNes";
+    ctx.fillStyle = "#FFFFFF"; //<======= and here
+    
+    let textFillRate = frameCount / 8;
+
+    ctx.fillText(lineOneText.slice(0, textFillRate).join(""), 90, 90);
+    ctx.fillText(lineTwoText.slice(0, Math.max(textFillRate - lineOneText.length, 0)).join(""), 120, 120);
+
 
     ctx.drawImage(linkImage, linkX, linkY);
   };
