@@ -60,8 +60,8 @@ function App() {
 
     let linkX = 250;
     let linkY = 330 - frameCount;
-    if (linkY < 160) {
-      linkY = 160;
+    if (linkY < 180) {
+      linkY = 180;
     }
 
     let lineOneText = "IT'S DANGEROUS TO GO".split("");
@@ -75,13 +75,13 @@ function App() {
     ctx.fillText(lineOneText.slice(0, textFillRate).join(""), 90, 90);
     ctx.fillText(lineTwoText.slice(0, Math.max(textFillRate - lineOneText.length, 0)).join(""), 120, 110);
 
-    ctx.drawImage(oldmanImage, 250, 140);
+    ctx.drawImage(oldmanImage, 250, 140, 32, 32);
 
-    let fireToDraw = Math.floor(frameCount / 30) % 2 === 0 ? fire1Image : fire2Image;
-    ctx.drawImage(fireToDraw, 200, 140);
-    ctx.drawImage(fireToDraw, 300, 140);
+    let fireToDraw = Math.floor(frameCount / 8) % 2 === 0 ? fire1Image : fire2Image;
+    ctx.drawImage(fireToDraw, 150, 140, 32, 32);
+    ctx.drawImage(fireToDraw, 350, 140, 32, 32);
 
-    ctx.drawImage(linkImage, linkX, linkY);
+    ctx.drawImage(linkImage, linkX, linkY, 32, 32);
   };
 
   const handleCanvasClick = (e) => {
