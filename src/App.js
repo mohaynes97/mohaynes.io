@@ -1,14 +1,25 @@
 import "./App.css";
 import React, { useRef, useEffect } from "react";
-import room from "./room.png";
-import link from "./link.png";
-import { list } from "postcss";
+import room from "./images/room.png";
+import link from "./images/link.png";
+import oldman from "./images/oldman.png";
+import fire1 from "./images/fire1.png";
+import fire2 from "./images/fire2.png";
 
 let roomImage = new Image();
 roomImage.src = room;
 
 let linkImage = new Image();
 linkImage.src = link;
+
+let oldmanImage = new Image();
+oldmanImage.src = oldman;
+
+let fire1Image = new Image();
+fire1Image.src = fire1;
+
+let fire2Image = new Image();
+fire2Image.src = fire2;
 
 const useCanvas = (draw) => {
   const canvasRef = useRef(null);
@@ -44,25 +55,31 @@ const Canvas = (props) => {
 
 function App() {
   const draw = (ctx, frameCount) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.drawImage(roomImage, 0, 0);
 
-    let linkX = 240;
+    let linkX = 250;
     let linkY = 330 - frameCount;
-    if (linkY < 64) {
-      linkY = 64;
+    if (linkY < 160) {
+      linkY = 160;
     }
 
     let lineOneText = "IT'S DANGEROUS TO GO".split("");
     let lineTwoText = "ALONE! TAKE THIS.".split("");
 
     ctx.font = "16px NintendoNes";
-    ctx.fillStyle = "#FFFFFF"; //<======= and here
+    ctx.fillStyle = "#FFFFFF";
     
     let textFillRate = frameCount / 8;
 
     ctx.fillText(lineOneText.slice(0, textFillRate).join(""), 90, 90);
-    ctx.fillText(lineTwoText.slice(0, Math.max(textFillRate - lineOneText.length, 0)).join(""), 120, 120);
+    ctx.fillText(lineTwoText.slice(0, Math.max(textFillRate - lineOneText.length, 0)).join(""), 120, 110);
 
+    ctx.drawImage(oldmanImage, 250, 140);
+
+    let fireToDraw = Math.floor(frameCount / 30) % 2 === 0 ? fire1Image : fire2Image;
+    ctx.drawImage(fireToDraw, 200, 140);
+    ctx.drawImage(fireToDraw, 300, 140);
 
     ctx.drawImage(linkImage, linkX, linkY);
   };
